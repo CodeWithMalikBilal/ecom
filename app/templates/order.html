@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    #order-page {
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    #order-page h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #e50914;
+    }
+
+    #order-page .order-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #333333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #order-page .order-form input,
+    #order-page .order-form select,
+    #order-page .order-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #555555;
+        border-radius: 5px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        font-size: 1em;
+    }
+
+    #order-page .order-form button {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #order-page .order-form button:hover {
+        background-color: #bf0811;
+    }
+
+    #order-page .map {
+        margin-top: 30px;
+    }
+
+    #order-page .map iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        border-radius: 10px;
+    }
+</style>
+
+<section id="order-page">
+    <h1>Order Online</h1>
+    <p>Fill out the form below to place your order. We deliver the best food right to your doorstep!</p>
+    <form class="order-form">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="address" placeholder="Your Address" required>
+        <input type="text" name="phone" placeholder="Your Phone Number" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        
+        <select name="order-type" id="order-type" required onchange="showOrderFields()">
+            <option value="" disabled selected>Select Item Type</option>
+            <option value="pizza">Pizza</option>
+            <option value="burger">Burger</option>
+            <option value="icecream">Ice Cream</option>
+        </select>
+        
+        <div id="pizza-fields" style="display:none;">
+            <select name="pizza-type" required>
+                <option value="" disabled selected>Select Pizza Type</option>
+                <option value="Margherita">Margherita</option>
+                <option value="Pepperoni">Pepperoni</option>
+                <option value="Veggie">Veggie</option>
+            </select>
+            <select name="pizza-size" required>
+                <option value="" disabled selected>Select Pizza Size</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+            </select>
+            <input type="number" name="pizza-quantity" placeholder="Quantity" min="1" required>
+        </div>
+        
+        <div id="burger-fields" style="display:none;">
+            <select name="burger-type" required>
+                <option value="" disabled selected>Select Burger Type</option>
+                <option value="Beef">Beef</option>
+                <option value="Chicken">Chicken</option>
+                <option value="Veggie">Veggie</option>
+            </select>
+            <select name="burger-size" required>
+                <option value="" disabled selected>Select Burger Size</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+            </select>
+            <input type="number" name="burger-quantity" placeholder="Quantity" min="1" required>
+        </div>
+        
+        <div id="icecream-fields" style="display:none;">
+            <select name="icecream-flavor" required>
+                <option value="" disabled selected>Select Ice Cream Flavor</option>
+                <option value="Vanilla">Vanilla</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Strawberry">Strawberry</option>
+            </select>
+            <input type="number" name="icecream-quantity" placeholder="Quantity" min="1" required>
+        </div>
+        
+        <textarea name="special-instructions" placeholder="Special Instructions"></textarea>
+        <button type="submit">Place Order</button>
+    </form>
+    <div class="map">
+        <h2>Find Us</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.055084872745!2d-122.41941538468167!3d37.77492927975907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c9e8f9787%3A0x4e9b1e06f1fa5c9d!2sPizza%20Hut!5e0!3m2!1sen!2sus!4v1633070467983!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</section>
+
+<script>
+    function showOrderFields() {
+        document.getElementById('pizza-fields').style.display = 'none';
+        document.getElementById('burger-fields').style.display = 'none';
+        document.getElementById('icecream-fields').style.display = 'none';
+        
+        const orderType = document.getElementById('order-type').value;
+        if (orderType === 'pizza') {
+            document.getElementById('pizza-fields').style.display = 'block';
+        } else if (orderType === 'burger') {
+            document.getElementById('burger-fields').style.display = 'block';
+        } else if (orderType === 'icecream') {
+            document.getElementById('icecream-fields').style.display = 'block';
+        }
+    }
+</script>
+
+{% endblock main-content %}

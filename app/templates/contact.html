@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+        opacity: 0; /* Initial state for animation */
+        transform: translateY(20px); /* Initial state for slide-in */
+        animation: fadeInSlide 1s ease-out 0.5s forwards; /* Added delay of 0.5s */
+    }
+
+    @keyframes fadeInSlide {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #contact {
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+    }
+
+    #contact .contact-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #contact h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #e50914;
+    }
+
+    #contact p {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .contact-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-form input, .contact-form textarea {
+        padding: 10px;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        font-size: 1em;
+    }
+
+    .contact-form button {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-form button:hover {
+        background-color: #bf0811;
+    }
+
+    .contact-info {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .contact-info h3 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+        color: #e50914;
+    }
+
+    .contact-info p {
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+</style>
+
+<section id="contact">
+    <div class="contact-content">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Please fill out the form below with your feedback, suggestions, or any inquiries you may have.</p>
+        <div class="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </div>
+        <div class="contact-info">
+            <h3>Our Contact Information</h3>
+            <p>Address: 123 Pizza Street, Pizzatown, PZ 45678</p>
+            <p>Email: contact@pizzahut.com</p>
+            <p>Telephone: +1 (123) 456-7890</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 500); // Delay of 500ms before adding the 'loaded' class
+    });
+</script>
+
+{% endblock main-content %}

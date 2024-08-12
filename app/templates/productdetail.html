@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    .product-detail {
+        padding: 50px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .product-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .product-header h1 {
+        font-size: 2.5em;
+        color: #e50914;
+        margin: 20px 0;
+    }
+
+    .product-header .product-price {
+        font-size: 2em;
+        color: #ffffff;
+        background-color: #e50914;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 400px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
+
+    .product-description {
+        background-color: #1c1c1c;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-description h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #e50914;
+    }
+
+    .product-description p {
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+
+    .action-buttons {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .action-buttons .primary {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .action-buttons .primary:hover {
+        background-color: #bf0811;
+    }
+
+    .action-buttons .cta {
+        padding: 15px 30px;
+        border: 2px solid #e50914;
+        border-radius: 5px;
+        background-color: transparent;
+        color: #e50914;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .action-buttons .cta:hover {
+        background-color: #e50914;
+        color: #ffffff;
+    }
+</style>
+
+<div class="product-detail">
+    <div class="product-header">
+        <h1>{{product.title}}</h1>
+        <div class="product-price">{{product.price}}</div>
+    </div>
+    <div class="product-image" style="background-image: url({{product.product_image.url}});"></div>
+    <div class="product-description">
+        <h2>Product Description</h2>
+        <p>{{product.discription}}</p>
+    </div>
+    <div class="action-buttons" class="d-inline">
+        <a href="" style="text-decoration:none"><button class="primary">Buy Now</button></a>
+        {% if request.user.is_authenticated %}
+        <form action="/add-to-cart" class="d-inline">
+            <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
+            <button class="cta" type="submit">Add to Cart</button>
+        </form>
+        {% else %}
+        
+            <a href="{% url "login" %}"><button class="cta">Add to Cart</button></a>
+        
+
+        {% endif %}
+
+
+        
+        
+    </div>
+</div>
+
+{% endblock main-content %}

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+        background-color: #121212;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        background-color: #1c1c1c;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: slideInUp 0.8s ease-in-out;
+    }
+
+    .login-box h2 {
+        margin-bottom: 20px;
+        color: #e50914;
+        font-size: 2em;
+        animation: fadeInDown 0.6s ease-in-out;
+    }
+
+    .login-box input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+
+    .login-box input:focus {
+        background-color: #333333;
+        outline: none;
+    }
+
+    .login-box button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    .login-box button:hover {
+        background-color: #bf0811;
+    }
+
+    .login-box a {
+        color: #e50914;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .login-box a:hover {
+        color: #bf0811;
+        text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .login-container {
+            padding: 0;
+        }
+
+        .login-box {
+            width: 50%;
+            max-width: none;
+            padding: 40px 60px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+                {% for fm in form %}
+                    <div class="form-group">
+                        {{ fm.label_tag }}{{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                    </div>
+                {% endfor %}
+                <button type="submit">Login</button>
+                <br>
+                <br>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+        </form>
+        <p>Don't have an account? <a href="{% url "register" %}">Register here</a></p>
+    </div>
+</div>
+
+{% endblock main-content %}

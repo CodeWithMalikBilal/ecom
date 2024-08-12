@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    #hero {
+        background-image: url('{% static "images/Margherita.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        color: #ffffff;
+        text-align: center;
+        padding: 150px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    #hero .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    #hero h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+
+    #hero p {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+    }
+
+    #hero .cta, #hero .secondary-cta {
+        display: inline-block;
+        padding: 15px 30px;
+        margin: 10px;
+        text-decoration: none;
+        color: #ffffff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    #hero .cta {
+        background-color: #e50914;
+    }
+
+    #hero .cta:hover {
+        background-color: #bf0811;
+    }
+
+    #hero .secondary-cta {
+        background-color: #333333;
+    }
+
+    #hero .secondary-cta:hover {
+        background-color: #555555;
+    }
+
+    #story {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 50px 20px;
+        overflow-x: hidden;
+    }
+
+    .story-item {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .story-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .story-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
+
+    .story-item:hover .story-image {
+        transform: scale(1.1);
+    }
+
+    .story-content {
+        padding: 20px;
+    }
+
+    .story-content h2 {
+        margin-bottom: 10px;
+        color: #e50914;
+    }
+
+    .story-content p {
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .story-content .cta {
+        background-color: #e50914;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #ffffff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .story-content .cta:hover {
+        background-color: #bf0811;
+    }
+
+    #about {
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+    }
+
+    #about .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #about h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #e50914;
+    }
+
+    #about p {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .team {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .team-member {
+        background-color: #333333;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-member:hover {
+        transform: scale(1.05);
+    }
+
+    .team-member img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .team-member h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #e50914;
+    }
+
+    .team-member p {
+        font-size: 1em;
+        line-height: 1.6;
+    }
+
+    #order {
+        padding: 50px 20px;
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+    #order .order-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #order h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #e50914;
+    }
+
+    #order p {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .order-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .order-form input, .order-form select, .order-form textarea {
+        padding: 10px;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        font-size: 1em;
+    }
+
+    .order-form button {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .order-form button:hover {
+        background-color: #bf0811;
+    }
+
+    .map {
+        margin-top: 30px;
+    }
+
+    .map iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        border-radius: 10px;
+    }
+
+    footer {
+        background-color: #1c1c1c;
+        padding: 20px 0;
+        text-align: center;
+        color: #ffffff;
+        border-top: 2px solid #e50914;
+    }
+
+    footer .payment-options img {
+        width: 50px;
+        margin: 0 10px;
+        transition: transform 0.3s ease;
+    }
+
+    footer .payment-options img:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<section id="hero">
+    <div class="hero-content">
+        <h1>Taste the Best Pizza in Town!</h1>
+        <p>Fresh ingredients, amazing flavors, right at your doorstep.</p>
+        <a href="#order" class="cta">Order Now</a>
+        <a href="#menu" class="secondary-cta">View Menu</a>
+    </div>
+</section>
+
+<h1 class="text-danger shadow text-center mt-2">Our Menu</h1>
+<section id="story">
+    {% for p in pizza  %}
+        <div class="story-item">
+            <a href="{% url "product-detail"  p.id %}" style="text-decoration:none;">
+                <div class="story-image" style="background-image: url({{ p.product_image.url }});"></div>
+                <div class="story-content">
+                    <h2>{{ p.title }}</h2>
+                    <p>{{ p.description }}</p>
+                    <a href="{% if request.user.is_authenticated %}{% url "product-detail" p.id %} {% else %} {% url "login" %} {% endif %}" class="cta">View Details</a>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+
+    {% for b in burger %}
+        <div class="story-item">
+            <a href="{% url "product-detail"  b.id %}" style="text-decoration:none;">
+                <div class="story-image" style="background-image: url({{ b.product_image.url }});"></div>
+                <div class="story-content">
+                    <h2>{{ b.title }}</h2>
+                    <p>{{ b.description }}</p>
+                    <a href="{% if request.user.is_authenticated %}{% url "product-detail" b.id %} {% else %} {% url "login" %} {% endif %}" class="cta">View Details</a>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+
+    {% for cc in cupcake %}
+        <div class="story-item">
+            <a href="{% url "product-detail"  cc.id %}" style="text-decoration:none;">
+                <div class="story-image" style="background-image: url({{ cc.product_image.url }});"></div>
+                <div class="story-content">
+                    <h2>{{ cc.title }}</h2>
+                    <p>{{ cc.description }}</p>
+                    <a href="{% if request.user.is_authenticated %}{% url "product-detail" cc.id %} {% else %} {% url "login" %} {% endif %}" class="cta">View Details</a>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+
+    {% for ic in icecream %}
+        <div class="story-item">
+            <a href="{% url "product-detail"  ic.id %}" style="text-decoration:none;">
+                <div class="story-image" style="background-image: url({{ ic.product_image.url }});"></div>
+                <div class="story-content">
+                    <h2>{{ ic.title }}</h2>
+                    <p>{{ ic.description }}</p>
+                    <a href="{% if request.user.is_authenticated %}{% url "product-detail" ic.id %} {% else %} {% url "login" %} {% endif %}" class="cta">View Details</a>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</section>
+
+<section id="about">
+    <div class="about-content">
+        <h2>About Us</h2>
+        <p>Welcome to Pizza Hut, where we have been serving delicious pizzas to our valued customers for over 20 years. Our mission is to provide an unforgettable pizza experience by using the freshest ingredients and traditional recipes. We believe in creating memorable dining experiences that our customers cherish.</p>
+        <p>At Pizza Hut, we value quality, customer satisfaction, and continuous innovation. Our team is dedicated to ensuring that every pizza we serve is a masterpiece of taste and texture. Join us in our journey to deliver happiness, one slice at a time.</p>
+        <h2>Meet Our Team</h2>
+        <div class="team">
+            <div class="team-member">
+                <img src="{% static 'images/profile-icon.png' %}" alt="CEO">
+                <h3>John Doe</h3>
+                <p>CEO</p>
+                <p>John has been leading Pizza Hut for over a decade, driving the company towards excellence with his vision and passion for quality food.</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/profile-icon.png' %}" alt="Head Chef">
+                <h3>Jane Smith</h3>
+                <p>Head Chef</p>
+                <p>Jane is the culinary genius behind our delicious pizzas. Her innovative recipes and dedication to fresh ingredients make every pizza special.</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/profile-icon.png' %}" alt="Restaurant Manager">
+                <h3>Emily Johnson</h3>
+                <p>Restaurant Manager</p>
+                <p>Emily ensures that every customer has a great experience at our restaurant. Her attention to detail and friendly service set us apart.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="order">
+    <div class="order-content">
+        <h2>Order Online</h2>
+        <p>Get your favorite pizza delivered to your doorstep! Fill out the form below to place your order.</p>
+        <div class="order-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="text" name="address" placeholder="Your Address" required>
+            <input type="text" name="phone" placeholder="Your Phone Number" required>
+            <select name="pizza-type" required>
+                <option value="" disabled selected>Select Pizza Type</option>
+                <option value="Margherita">Margherita</option>
+                <option value="Pepperoni">Pepperoni</option>
+                <option value="Veggie">Veggie</option>
+            </select>
+            <textarea name="special-instructions" placeholder="Special Instructions"></textarea>
+            <button type="submit">Place Order</button>
+        </div>
+        <div class="map">
+            <h2>Find Us</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.055084872745!2d-122.41941538468167!3d37.77492927975907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c9e8f9787%3A0x4e9b1e06f1fa5c9d!2sPizza%20Hut!5e0!3m2!1sen!2sus!4v1633070467983!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="payment-options">
+        <h2>Accepted Payment Methods</h2>
+        <img src="{% static 'images/cashondelivery.jpg' %}" alt="Cash on Delivery">
+        <img src="{% static 'images/easypaisa.jpg' %}" alt="EasyPaisa">
+        <img src="{% static 'images/jazzcash.png' %}" alt="JazzCash">
+        <img src="{% static 'images/mastercard.jpeg' %}" alt="MasterCard">
+    </div>
+    <p>&copy; 2024 Pizza Hut. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        const navUl = document.querySelector('nav ul');
+        navUl.classList.toggle('active');
+    }
+</script>
+
+{% endblock main-content %}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    .cart-container {
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .cart-container h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #e50914;
+        text-align: center;
+    }
+
+    .cart-items {
+        background-color: #333333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+        width: 70%;
+        flex: 3;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .cart-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .cart-item-details {
+        flex: 1;
+        margin-left: 20px;
+        text-align: left;
+    }
+
+    .cart-item-details h3 {
+        color: #e50914;
+        margin-bottom: 10px;
+    }
+
+    .cart-item-details p {
+        line-height: 1.6;
+    }
+
+    .cart-item-quantity {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .quantity-input {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-input input {
+        width: 50px;
+        text-align: center;
+        border: 1px solid #e50914;
+        border-radius: 5px;
+        padding: 5px;
+        margin-left: 10px;
+        color: #000;
+        transition: transform 0.2s;
+    }
+
+    .quantity-input input:focus {
+        transform: scale(1.1);
+    }
+
+    .quantity-input input:focus-visible {
+        outline: none;
+    }
+
+    .quantity-input button {
+        background-color: #e50914;
+        border: none;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .quantity-input button:hover {
+        background-color: #bf0811;
+    }
+
+    .remove-button {
+        background-color: #e50914;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    .remove-button:hover {
+        background-color: #bf0811;
+    }
+
+    .cart-summary {
+        background-color: #333333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        width: 30%;
+        flex: 1;
+        text-align: center;
+    }
+
+    .cart-summary h2 {
+        color: #e50914;
+        margin-bottom: 20px;
+    }
+
+    .cart-summary p {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+
+    .checkout-button {
+        padding: 15px 30px;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #e50914;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .checkout-button:hover {
+        background-color: #bf0811;
+    }
+</style>
+
+<section class="cart-container">
+    <div class="cart-items">
+        <h1>Your Cart</h1>
+        {% for cart in carts  %}
+            <div class="cart-item" id="item-icecream1">
+                <img src="{{cart.product.product_image.url}}" alt="Ice Cream">
+                <div class="cart-item-details">
+                    <h3>{{cart.product.title}}</h3>
+                    <p>{{cart.product.discription}}</p>
+                    <p class="text-danger">Rs. {{cart.product.price}}</p>
+                    <a href="#" class="remove-cart remove-button" pid="{{cart.product.id}}">Remove</a>
+                </div>
+                <div class="cart-item-quantity">
+                    <label for="quantity-icecream1">Quantity:</label>
+                    <div class="quantity-input">
+                        <a href="" class="minus-cart btn" pid="{{cart.product.id}}"><i class="fas fa-minus-square fa-lg"></i></a>
+                        <span id="quantity">{{cart.quantity}}</span>
+                        <a href="#" class="plus-cart btn" pid = "{{cart.product.id}}"><i class="fas fa-plus-square fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="cart-summary">
+        <h2>Cart Summary</h2>
+        <p>Total Items: <span id="quant">{{quant}}</span></p>
+        <p>Total Price: <span id="amount">{{amount}}</span></p>
+        <p>Shipping Charges : 200 </p>
+        <p>Sub Total : <span id="total">{{total}}</span></p>
+        <a href="#" class="checkout-button">Checkout Now</a>
+    </div>
+</section>
+{% endblock main-content %}

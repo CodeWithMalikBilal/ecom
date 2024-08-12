@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .profile-left,
+    .profile-right {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .profile-left {
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #333333;
+        margin-bottom: 20px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile-left p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .profile-right {
+        background-color: #2a2a2a;
+        border-radius: 10px;
+    }
+
+    .profile-right h2 {
+        color: #e50914;
+        margin-bottom: 20px;
+    }
+
+    .profile-right form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-right label {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+    }
+
+    .profile-right input,
+    .profile-right select {
+        padding: 10px;
+        margin-bottom: 10px; /* Reduced margin */
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .update-button, .address-button {
+        padding: 15px;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #e50914;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .update-button:hover, .address-button:hover {
+        background-color: #bf0811;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .profile-container {
+            flex-direction: row;
+            max-width: 1200px;
+            padding: 50px;
+        }
+
+        .profile-content {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .profile-left,
+        .profile-right {
+            width: 50%;
+        }
+
+        .profile-left {
+            margin-right: 20px;
+            margin-bottom: 0;
+        }
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-content">
+        <div class="profile-left">
+            <div class="profile-image">
+                <img src="{% static "images/burger1.jpg" %}" alt="Profile Image">
+            </div>
+            <p class="mt-2 text-capitalize"><strong></strong> {{ request.user }}</p>
+            <p><strong>Mobile Number:</strong> {{ request.user.mobile }}</p>
+            <p><strong>Registered Email:</strong> {{ request.email }}</p>
+            <a href="{% url "address" %}" class="address-button mt-5"> Address</a>
+        </div>
+        <div class="profile-right">
+            <h2>Update Profile</h2>
+          
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                {% for fm in form  %}
+                    <div class="form-group">
+                         {{ fm.label_tag }}{{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                    </div>
+                 {% endfor %}
+                 <button class="update-button mt-2" type="submit">Update Profile</button>
+
+                     {% if messages %}
+                        {% for message in messages %}
+                            <p {% if message.tags %} class="alert alert-{{message.tags}} mt-3"{% endif %}>{{message}}</p>
+                        {% endfor %}
+                     {% endif %}
+                
+                 {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="alert alert-danger my-3">{{ error }}</p>
+                        {% endfor %}
+                {% endif %}
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}

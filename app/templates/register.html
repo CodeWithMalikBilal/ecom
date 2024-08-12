@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        background-color: #121212;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .register-box {
+        width: 100%;
+        max-width: 800px;
+        background-color: #1c1c1c;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        text-align: center;
+        animation: slideInUp 0.8s ease-in-out;
+    }
+
+    .register-box h2 {
+        margin-bottom: 20px;
+        color: #e50914;
+        font-size: 2em;
+        animation: fadeInDown 0.6s ease-in-out;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #1c1c1c;
+        color: #f1f1f1;
+        font-size: 1em;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        background-color: #333333;
+        outline: none;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+    }
+
+    .form-group small {
+        color: #ff4d4d;
+    }
+
+    .form-group .radio-inline {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .register-box .btn {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #e50914;
+        color: #ffffff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.8s ease-in-out;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .register-box .btn:hover {
+        background-color: #bf0811;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+    }
+
+    .register-box a {
+        color: #e50914;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .register-box a:hover {
+        color: #bf0811;
+        text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .register-container {
+            padding: 0;
+        }
+
+        .register-box {
+            width: 80%;
+            max-width: none;
+            padding: 40px 60px;
+        }
+    }
+</style>
+
+<div class="register-container mt-2">
+    <div class="register-box mt-2">
+        <h2>Register</h2>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p {% if message.tags %}class="alert alert-{{message.tags}} mb-5"{% endif %}>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+           
+            {% for fm in form %}
+                <div class="form-group">
+                    {{ fm.label_tag }} {{ fm }}
+                    {% if fm.field.widget.input_type == 'radio' %}
+                        <div>
+                            {% for subwidget in fm %}
+                                <label class="radio-inline">{{ subwidget.tag }} {{ subwidget.choice_label }}</label>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="text-danger">{{ fm.errors|striptags }}</small>
+                </div>
+            {% endfor %}
+            <input type="submit" value="Register" class="btn">
+            <br><br>
+            <p>Already registered? <a href="{% url 'login' %}">Login Now</a></p>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger my-3">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock main-content %}

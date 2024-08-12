@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<style>
+    body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .address-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+        background-color: #1c1c1c;
+        color: #ffffff;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .address-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .address-left,
+    .address-right {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .address-left {
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #333333;
+        margin-bottom: 20px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .address-left p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .address-right {
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .address-right h2 {
+        color: #e50914;
+        margin-bottom: 20px;
+    }
+
+    .address-right p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .address-container {
+            flex-direction: row;
+            max-width: 1200px;
+            padding: 50px;
+        }
+
+        .address-content {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .address-left,
+        .address-right {
+            width: 50%;
+        }
+
+        .address-left {
+            margin-right: 20px;
+            margin-bottom: 0;
+        }
+    }
+</style>
+
+<div class="address-container">
+    <div class="address-content">
+        <div class="address-left">
+            <div class="profile-image">
+                <img src="{% static 'images/2.jpg' %}" alt="Profile Image">
+            </div>
+            <p><strong>Name:</strong> {{ request.user }}</p>
+            <p><strong>Mobile Number:</strong> {{ customer.mobile_number }}</p>
+            <p><strong>Registered Email:</strong> {{ customer.email }}</p>
+        </div>
+        <div class="address-right">
+            {% for ad in add %}
+            <h2>Address {{forloop.counter}}</h2>
+            <p>{{ad.name}}</p>
+            <p>{{ad.email}}</p>
+            <p>{{ad.mobile}}</p>
+            <p>{{ad.address}}</p>
+            {% endfor %}
+        </div> 
+    </div>
+</div>
+
+{% endblock main-content %}
